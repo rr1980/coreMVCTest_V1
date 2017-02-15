@@ -21,7 +21,7 @@ namespace Main.Controllers
         [Authorize(Policy = "ReadPolicy")]
         public async Task<IActionResult> Index()
         {
-            _logger.LogWarning("loulou");
+            //_logger.LogWarning("loulou");
             //_logger.LogError("loulou");
             _logger.LogWarning(LoggingEvents.GET_ITEM, "Getting item {ID}", 1);
             return View();

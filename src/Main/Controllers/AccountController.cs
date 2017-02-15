@@ -33,12 +33,12 @@ namespace Main.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(_loginService.Auth(model.Username, model.Password))
+                if (_loginService.Auth(model.Username, model.Password))
                 {
                     var claims = new List<Claim> {
-                                new Claim(ClaimTypes.Authentication, "true"),
-                                new Claim(ClaimTypes.Name, model.Username),
-                                new Claim(ClaimTypes.Role,model.Username == "rr1980" ? "Admin":"Default")
+                                 new Claim(ClaimTypes.Authentication, "true"),
+                                 new Claim(ClaimTypes.Name, model.Username),
+                                 new Claim(ClaimTypes.Role,model.Username == "rr1980" ? "Admin":"Default")
                         };
 
                     var claimsIdentity = new ClaimsIdentity(claims, "password");

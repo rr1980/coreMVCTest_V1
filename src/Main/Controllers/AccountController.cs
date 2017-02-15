@@ -31,7 +31,6 @@ namespace Main.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            //test
             if (ModelState.IsValid)
             {
                 

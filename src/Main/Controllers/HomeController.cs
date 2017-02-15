@@ -31,7 +31,7 @@ namespace Main.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return View(); 
         }
 
         [Authorize(Policy = "AdminPolicy")]

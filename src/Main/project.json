@@ -22,7 +22,10 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
-    "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0"
+    "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
+    "ViewModels": "1.0.0-*",
+    "Services": "1.0.0-*",
+    "Common": "1.0.0-*"
   },
 
   "tools": {

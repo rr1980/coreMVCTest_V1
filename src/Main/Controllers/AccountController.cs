@@ -33,7 +33,6 @@ namespace Main.Controllers
         {
             if (ModelState.IsValid)
             {
-                
                 if(_loginService.Auth(model.Username, model.Password))
                 {
                     var claims = new List<Claim> {

@@ -16,23 +16,33 @@ namespace Main.TagHelpers
         public string Input { get; set; }
 
         [HtmlAttributeName("th-col")]
-        public int Col { get; set; } = 18;
+        public int Col { get; set; } = 12;
 
-        [HtmlAttributeName("th-col-label")]
-        public int Col_label { get; set; } = 9;
+        [HtmlAttributeName("th-span-width")]
+        public string Col_Span { get; set; } = "100px";
+
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            var Col_input = 18 - Col_label;
+            //var Col_Input = 12 - Col_Span;
 
-            output.TagName = "div";
-            output.TagMode = TagMode.StartTagAndEndTag;
+            //output.TagName = "div";
+            //output.TagMode = TagMode.StartTagAndEndTag;
 
-            output.Attributes.SetAttribute("class", $"control col-{Col}");
+            //output.Attributes.SetAttribute("class", $"form-group col-md-{Col}");
 
             var template = "";
-            template += $"<label class='control-label col-{Col_label}' for='{Label}'>{Label}&nbsp</label>";
-            template += $"<input type='text' class='control-input col-{Col_input}' name='{Label}' data-bind='value {Input}' />";
+
+            //template += $"<span style='min-width:{Col_Span}' class='input-group-addon' for='{Label}'>{Label}&nbsp</span>";
+            //template += $"<label for='{Label}'>{Label}&nbsp";
+            //template += $"<input type='text' class='form-control' placeholder='. . .' name='{Label}' data-bind='value {Input}' />";
+            //template += "</label>";
+
+
+            template += "<div style='margin-bottom: 25px' class='input-group'>";
+            template += "<span class='input-group-addon'><i class='glyphicon glyphicon-user'></i></span>";
+            template += "<input type='text' class='form-control' name='username' value='' placeholder='Username'>";
+            template += "</div>";
 
             output.Content.SetHtmlContent(template);
         }

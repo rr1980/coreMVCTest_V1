@@ -6,9 +6,10 @@
     <title>@ViewData["Title"] - Main</title>
 
     <environment names="Development">
-        @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-dark.css" />*@
-        @*<link rel="stylesheet" href="~/css/site.css" />*@
-        <link rel="stylesheet" href="~/css/main.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-dark.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        @*<link rel="stylesheet" href="~/css/main.css" />*@
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -42,7 +43,7 @@
     @RenderSection("scripts", required: false)
 
 
-    <div class="container body-content">
+    <div class="container-fluid body-content">
         @RenderBody()
     </div>
 </body>

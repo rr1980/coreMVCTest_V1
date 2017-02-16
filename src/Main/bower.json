@@ -4,10 +4,10 @@
   "private": true,
   "dependencies": {
     "bootstrap": "*",
-    "jquery": "*",
+    "jquery": "2.2.3",
     "jquery-validation": "*",
     "jquery-validation-unobtrusive": "*",
     "knockout": "*",
-    "knockout-mapping": "*" 
+    "knockout-mapping": "*"
   }
 }

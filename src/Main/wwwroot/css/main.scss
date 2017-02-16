@@ -1,14 +1,20 @@
-﻿$default_colMax: 20;
+﻿$default_colMax: 18;
 
 $default_blue: #414df0;
 $default_background_in: rgb(31, 35, 29);
 $default_background_out: rgb(46, 47, 46);
-
+$default_boarder_color: white;
 
 /*-----------------------------*/
 $hide_colPCent: 100 / $default_colMax;
 
 /* CSS3 calc() function to perform calculations */
+@mixin box-sizing($value) {
+    -moz-box-sizing: $value;
+    -webkit-box-sizing: $value;
+    box-sizing: $value;
+}
+
 @mixin calc($property, $expression) {
     #{$property}: -webkit-calc(#{$expression});
     #{$property}: -moz-calc(#{$expression});
@@ -32,21 +38,27 @@ body {
         min-width: $v;
         max-width: $v;
         width: $v;
+
+        @include box-sizing(border-box);
     }
 }
 
-/*.col-1 {
-    $v: 10%;
-    float: left;
-    min-width: $v;
-    max-width: $v;
-    width: $v;
-}
+.control {
+    border-style: solid;
+    border-width: 1px 2px 2px 1px;
+    border-color: $default_boarder_color;
 
-.col-2 {
-    $v: 20%;
-    float: left;
-    min-width: $v;
-    max-width: $v;
-    width: $v;
-}*/
+    @include box-sizing(border-box);
+
+
+    .control-input {
+        @include box-sizing(border-box);
+    }
+
+    .control-label {
+        color: white;
+        text-align: right;
+
+        @include box-sizing(border-box);
+    }
+}

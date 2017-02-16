@@ -1,4 +1,5 @@
-﻿@model  ViewModels.LoginViewModel
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model  ViewModels.LoginViewModel
 @{
     Layout = "_LayoutLogin";
     ViewBag.Title = "Login";
@@ -6,19 +7,20 @@
  
 
 
-<div style="background-color:red;" class="col-10">
+<div style="background-color:red;" class="col-9">
     1
     a
     b
     c
 </div>
 
-<div style="background-color:green;" class="col-10">
+<div style="background-color:green;" class="col-9">
     2
 </div>
 
 
 
+<th-label-input th-col="9" th-label="Name" th-input="username"></th-label-input>
 
 
 
@@ -43,5 +45,5 @@
         </div>
         <div asp-validation-summary="@ValidationSummary.ModelOnly"></div>
         <input type="submit" value="Login" />
-    </form> 
+    </form>
 </div>*@

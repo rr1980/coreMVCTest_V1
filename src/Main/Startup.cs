@@ -58,7 +58,7 @@ namespace Main
             });
 
             // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
+            //services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc();
 

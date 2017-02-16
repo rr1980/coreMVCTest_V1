@@ -51,7 +51,6 @@ namespace Main.Controllers
                         AllowRefresh = true
                     });
 
-
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);
@@ -70,11 +69,9 @@ namespace Main.Controllers
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Username or Password wrong!");
                 return View(model);
             }
         }
-
 
         [Authorize]
         public async Task<IActionResult> Logout()

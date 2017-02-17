@@ -19,7 +19,7 @@ namespace Services
 
         public async Task<IEntity> Auth(string username, string password)
         {
-            return await _context.Users.Include(r => r.Roles).SingleOrDefaultAsync(u => u.Username == username && u.Password == password);
+            return await _context.Users.Include(u => u.RoleToUser).ThenInclude(r => r.Role).SingleOrDefaultAsync(u => u.Username == username && u.Password == password);
         }
     }
 }

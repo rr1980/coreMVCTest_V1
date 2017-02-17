@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ViewModels;
@@ -22,18 +24,20 @@ namespace Main.Controllers
         [Authorize(Policy = "ReadPolicy")]
         public async Task<IActionResult> Index()
         {
-            var result = new HomeViewModel();
-            //_logger.LogWarning("loulou");
-            //_logger.LogError("loulou");
-            _logger.LogWarning(LoggingEvents.GET_ITEM, "Getting item {ID}", 1);
+            var nachname = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname).Value;
+            var vorname = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName).Value;
+
+            var result = new HomeViewModel() { Name = nachname, Vorname = vorname };
+
             return View(result);
         }
 
+        [Authorize(Policy = "ReadPolicy")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View(); 
+            return View();
         }
 
         [Authorize(Policy = "AdminPolicy")]
@@ -52,3 +56,9 @@ namespace Main.Controllers
 
     }
 }
+
+
+
+//_logger.LogWarning("loulou");
+//_logger.LogError("loulou");
+//_logger.LogWarning(LoggingEvents.GET_ITEM, "Getting item {ID}", 1);

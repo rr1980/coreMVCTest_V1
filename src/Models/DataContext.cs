@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Models
 {
-    public class DataContext : DbContext 
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
@@ -18,9 +18,9 @@ namespace Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("User");
-            modelBuilder.Entity<Role>().ToTable("Role");
-            modelBuilder.Entity<RoleToUser>().ToTable("RoleToUser");
+            modelBuilder.Entity<RoleToUser>().HasKey(t => new { t.UserId, t.RoleId });
+            modelBuilder.Entity<RoleToUser>().HasOne(rtu => rtu.Role).WithMany(r => r.RoleToUser).HasForeignKey(rtu => rtu.RoleId);
+            modelBuilder.Entity<RoleToUser>().HasOne(rtu => rtu.User).WithMany(r => r.RoleToUser).HasForeignKey(rtu => rtu.UserId);
         }
     }
 }

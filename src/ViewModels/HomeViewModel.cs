@@ -7,6 +7,7 @@ namespace ViewModels
 {
     public class HomeViewModel
     {
-        public string Name { get; set; } = "Rene";
+        public string Name { get; set; }
+        public string Vorname { get; set; }
     }
 }

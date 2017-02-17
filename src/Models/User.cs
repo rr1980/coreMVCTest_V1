@@ -1,5 +1,6 @@
 ﻿using Common;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
@@ -11,6 +12,6 @@ namespace Models
         public string Username { get; set; }
         public string Password { get; set; }
 
-        public ICollection<Role> Roles { get; set; }
+        public virtual ICollection<RoleToUser> RoleToUser { get; set; }
     }
 }

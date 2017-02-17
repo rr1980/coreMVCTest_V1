@@ -19,31 +19,49 @@ namespace Main.Helper
                 return;   // DB has been seeded
             }
 
-            var r = new Role("Admin");
+            var r1 = new Role();
+            var r2 = new Role();
 
-            var u = new User
+            r1.Bezeichnung = "Admin";
+            r2.Bezeichnung = "Default";
+
+            var u1 = new User
             {
                 Name = "Riesner",
                 Vorname = "Rene",
                 Username = "rr1980",
                 Password = "12003"
             };
-
-            var rtu = new RoleToUser()
+            var rtu1_1 = new RoleToUser()
             {
-                Role = r,
-                User = u
-
+                Role = r1,
+                User = u1
             };
 
-            context.RoleToUsers.Add(rtu);
+            var rtu1_2 = new RoleToUser()
+            {
+                Role = r2,
+                User = u1
+            };
+
+            var u2 = new User
+            {
+                Name = "Riesner",
+                Vorname = "Sven",
+                Username = "Oxi",
+                Password = "12003"
+            };
 
 
+            var rtu2_1 = new RoleToUser()
+            {
+                Role = r2,
+                User = u2
+            };
 
-
-            //u.Roles = new List<Role>() { r };
-
-            //context.Users.Add(u);
+            context.RoleToUsers.Add(rtu1_1);
+            context.RoleToUsers.Add(rtu1_2);
+            context.RoleToUsers.Add(rtu2_1);
 
             context.SaveChanges();
 

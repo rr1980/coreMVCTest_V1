@@ -6,7 +6,7 @@
 <div id="homeView" class="container-fluid">
     <h1>
         Hallo...
-        <span data-bind="text: name"></span>
+        <span data-bind="text: (name()+', '+vorname())"></span>
 
 
         ﻿<a asp-controller="Account" asp-action="Logout">Logout</a>

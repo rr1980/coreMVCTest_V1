@@ -39,10 +39,13 @@ namespace Main.Controllers
                 {
                     var claims = new List<Claim> {
                                  new Claim(ClaimTypes.Authentication, "true"),
+                                 new Claim(ClaimTypes.Sid, user.UserId.ToString()),
+                                 new Claim(ClaimTypes.Surname, user.Name),
+                                 new Claim(ClaimTypes.GivenName, user.Vorname),
                                  new Claim(ClaimTypes.Name, user.Username)
                         };
 
-                    var uroles = user.Roles.Select(r => new Claim(ClaimTypes.Role, r.Bezeichnung));
+                    var uroles = user.RoleToUser.Select(rtu=>rtu.Role).Select(r => new Claim(ClaimTypes.Role, r.Bezeichnung));
                     foreach (var role in uroles)
                     {
                         claims.Add(role);

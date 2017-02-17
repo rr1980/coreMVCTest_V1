@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    public interface ILoginService
+    public interface IEntity
     {
-        Task<IEntity> Auth(string username, string password);
     }
 }

@@ -14,6 +14,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Services;
+using Microsoft.EntityFrameworkCore;
+using Models;
+using Main.Helper;
 
 namespace Main
 {
@@ -40,6 +43,9 @@ namespace Main
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("ReadPolicy", policyBuilder =>
@@ -67,7 +73,7 @@ namespace Main
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DataContext ctx)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -120,7 +126,7 @@ namespace Main
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-
+            SeedData.Initialize(ctx);
         }
     }
 }

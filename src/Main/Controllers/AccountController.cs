@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using ViewModels;
+using Models;
 
 namespace Main.Controllers
 {
@@ -33,13 +34,20 @@ namespace Main.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_loginService.Auth(model.Username, model.Password))
+                User user = (User)await _loginService.Auth(model.Username, model.Password);
+                if (user != null)
                 {
                     var claims = new List<Claim> {
                                  new Claim(ClaimTypes.Authentication, "true"),
-                                 new Claim(ClaimTypes.Name, model.Username),
-                                 new Claim(ClaimTypes.Role,model.Username == "rr1980" ? "Admin":"Default")
+                                 new Claim(ClaimTypes.Name, user.Username)
                         };
+
+                    var uroles = user.Roles.Select(r => new Claim(ClaimTypes.Role, r.Bezeichnung));
+                    foreach (var role in uroles)
+                    {
+                        claims.Add(role);
+                    }
+                   
 
                     var claimsIdentity = new ClaimsIdentity(claims, "password");
                     var claimsPrinciple = new ClaimsPrincipal(claimsIdentity);

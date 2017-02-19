@@ -14,7 +14,7 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    /*max-width: 280px;*/
 }
 
 /* Carousel */
@@ -24,15 +24,43 @@ textarea {
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"]
-{
+.carousel-inner .item img[src$=".svg"] {
     width: 100%;
 }
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
-  /* Hide captions */
-  .carousel-caption {
-    display: none
-  }
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
 }
+
+.input-group .input-group-addon {
+    color: white;
+    font-weight: bold;
+}
+
+.input-group .form-control {
+    background-color: rgba(137, 137, 137, 0.97);
+    color: black;
+    font-weight: bold;
+    /*max-width: 100%;*/
+}
+
+.input-group .ccol {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.error-content > ul {
+    padding-left: 0;
+}
+
+    .error-content > ul > li {
+        text-align: center;
+        list-style-type: none;
+        color: red;
+        font-size: 120%;
+        font-weight: bold;
+    }

@@ -1,13 +1,21 @@
-﻿@{
+﻿@model  ViewModels.HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container-fluid">
-  <h1>
-      Hallo...
+<div id="homeView" class="container-fluid">
+    <h1>
+        Hallo...
+        <span data-bind="text: (name()+', '+vorname())"></span>
 
-          
-          ﻿<a asp-controller="Account" asp-action="Logout">Logout</a>
 
-  </h1>
+        ﻿<a asp-controller="Account" asp-action="Logout">Logout</a>
+
+    </h1>
 </div>
+
+
+<script>
+    var vmc = document.getElementById("homeView");
+    ko.applyBindings(new HomeViewData(@Html.Raw(Json.Serialize(Model))), vmc);
+</script>

@@ -14,6 +14,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Services;
+using Microsoft.EntityFrameworkCore;
+using Models;
+using Main.Helper;
 
 namespace Main
 {
@@ -40,39 +43,34 @@ namespace Main
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ReadPolicy", policyBuilder =>
-                {
-                    policyBuilder.RequireAuthenticatedUser()
-                        .RequireAssertion(context => context.User.HasClaim(ClaimTypes.Authentication, "true"))
-                        .Build();
-                });
-
-                options.AddPolicy("AdminPolicy", policyBuilder =>
-                {
-                    policyBuilder.RequireAuthenticatedUser()
-                        .RequireAssertion(context => context.User.IsInRole("Admin") && context.User.HasClaim(ClaimTypes.Authentication, "true"))
-                        .Build();
-                });
-            });
-
-            // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
+            services.AddDbContext<DataContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMvc();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ReadPolicy", policy => policy.Requirements.Add(new AuthPolicyRequirement(UserRoleType.Default)));
+                options.AddPolicy("AdminPolicy", policy => policy.Requirements.Add(new AuthPolicyRequirement(UserRoleType.Admin)));
+            });
+
+            // Add framework services.
+            //services.AddApplicationInsightsTelemetry(Configuration);
+
+
+
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IAuthorizationHandler, AuthPolicyHandler>();
             services.AddScoped<ILoginService, LoginService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DataContext ctx)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseApplicationInsightsRequestTelemetry();
+            //app.UseApplicationInsightsRequestTelemetry();
 
             if (env.IsDevelopment())
             {
@@ -84,7 +82,7 @@ namespace Main
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseApplicationInsightsExceptionTelemetry();
+            //app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
 
@@ -120,7 +118,7 @@ namespace Main
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-
+            SeedData.Initialize(ctx);
         }
     }
 }

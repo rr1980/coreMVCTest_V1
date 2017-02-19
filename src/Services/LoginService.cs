@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Common;
+using Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
     public class LoginService : ILoginService
     {
-        public bool Auth(string username, string password)
-        {
-            if ((username == "rr1980" || username == "Oxi") && password == "12003")
-            {
-                return true;
-            }
+        private readonly DataContext _context;
 
-            return false;
+        public LoginService(DataContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IEntity> Auth(string username, string password)
+        {
+            return await _context.Users.Include(u => u.RoleToUser).ThenInclude(r => r.Role).SingleOrDefaultAsync(u => u.Username == username && u.Password == password);
         }
     }
 }
+

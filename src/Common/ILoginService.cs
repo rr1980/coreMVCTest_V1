@@ -7,6 +7,6 @@ namespace Common
 {
     public interface ILoginService
     {
-        bool Auth(string username, string password);
+        Task<IEntity> Auth(string username, string password);
     }
 }

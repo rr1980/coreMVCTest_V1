@@ -46,29 +46,21 @@ namespace Main
             services.AddDbContext<DataContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddMvc();
+
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ReadPolicy", policyBuilder =>
-                {
-                    policyBuilder.RequireAuthenticatedUser()
-                        .RequireAssertion(context => context.User.IsInRole(UserRoleType.Default) && context.User.HasClaim(ClaimTypes.Authentication, "true"))
-                        .Build();
-                });
-
-                options.AddPolicy("AdminPolicy", policyBuilder =>
-                {
-                    policyBuilder.RequireAuthenticatedUser()
-                        .RequireAssertion(context => context.User.IsInRole("Admin") && context.User.HasClaim(ClaimTypes.Authentication, "true"))
-                        .Build();
-                });
+                options.AddPolicy("ReadPolicy", policy => policy.Requirements.Add(new AuthPolicyRequirement(UserRoleType.Default)));
+                options.AddPolicy("AdminPolicy", policy => policy.Requirements.Add(new AuthPolicyRequirement(UserRoleType.Admin)));
             });
 
             // Add framework services.
             //services.AddApplicationInsightsTelemetry(Configuration);
 
-            services.AddMvc();
+
 
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IAuthorizationHandler, AuthPolicyHandler>();
             services.AddScoped<ILoginService, LoginService>();
         }
 

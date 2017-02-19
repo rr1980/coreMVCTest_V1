@@ -31,7 +31,8 @@
     "Microsoft.AspNetCore.Razor.Runtime": "1.1.0",
     "Models": "1.0.0-*",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
-    "Microsoft.EntityFrameworkCore.Tools": "1.1.0-msbuild3-final"
+    "Microsoft.EntityFrameworkCore.Tools": "1.1.0-msbuild3-final",
+    "Microsoft.AspNetCore.WebSockets": "1.0.0"
   },
 
   "tools": {

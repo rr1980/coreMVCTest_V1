@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Common;
+using Main.Helper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Services;
-using Microsoft.EntityFrameworkCore;
 using Models;
-using Main.Helper;
+using Services;
 
 namespace Main
 {
@@ -33,7 +33,7 @@ namespace Main
             if (env.IsDevelopment())
             {
                 // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
-                builder.AddApplicationInsightsSettings(developerMode: true);
+                //builder.AddApplicationInsightsSettings(developerMode: true);
             }
             Configuration = builder.Build();
         }
@@ -57,7 +57,8 @@ namespace Main
             // Add framework services.
             //services.AddApplicationInsightsTelemetry(Configuration);
 
-
+            services.AddWebSocketManager();
+            
 
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IAuthorizationHandler, AuthPolicyHandler>();
@@ -65,10 +66,12 @@ namespace Main
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DataContext ctx)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DataContext ctx, IServiceProvider serviceProvider)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseWebSockets();
 
             //app.UseApplicationInsightsRequestTelemetry();
 
@@ -111,12 +114,16 @@ namespace Main
                 return Task.FromResult(context.Principal);
             });
 
+
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.MapWebSocketManager("/notifications", serviceProvider.GetService<NotificationsMessageHandler>());
 
             SeedData.Initialize(ctx);
         }

@@ -51,7 +51,7 @@ namespace Main
                 options.AddPolicy("ReadPolicy", policyBuilder =>
                 {
                     policyBuilder.RequireAuthenticatedUser()
-                        .RequireAssertion(context => context.User.IsInRole("Default") && context.User.HasClaim(ClaimTypes.Authentication, "true"))
+                        .RequireAssertion(context => context.User.IsInRole(UserRoleType.Default) && context.User.HasClaim(ClaimTypes.Authentication, "true"))
                         .Build();
                 });
 

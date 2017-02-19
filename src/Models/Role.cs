@@ -10,7 +10,7 @@ namespace Models
     public class Role : IEntity
     {
         public int RoleId { get; set; }
-        public string Bezeichnung { get; set; }
+        public UserRoleType UserRoleType { get; set; }
 
         public virtual ICollection<RoleToUser> RoleToUser { get; set; }
     }

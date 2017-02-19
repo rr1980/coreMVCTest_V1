@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Models;
 using System;
@@ -22,8 +23,8 @@ namespace Main.Helper
             var r1 = new Role();
             var r2 = new Role();
 
-            r1.Bezeichnung = "Admin";
-            r2.Bezeichnung = "Default";
+            r1.UserRoleType = UserRoleType.Admin;
+            r2.UserRoleType = UserRoleType.Default;
 
             var u1 = new User
             {

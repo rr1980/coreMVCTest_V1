@@ -45,7 +45,7 @@ namespace Main.Controllers
                                  new Claim(ClaimTypes.Name, user.Username)
                         };
 
-                    var uroles = user.RoleToUser.Select(rtu=>rtu.Role).Select(r => new Claim(ClaimTypes.Role, r.Bezeichnung));
+                    var uroles = user.RoleToUser.Select(rtu=>rtu.Role).Select(r => new Claim(ClaimTypes.Role, r.UserRoleType.ToString()));
                     foreach (var role in uroles)
                     {
                         claims.Add(role);
